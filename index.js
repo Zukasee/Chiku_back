@@ -49,7 +49,7 @@ bot.on('message', async (msg) => {
 }
 });
 
-app.post('/web-data',async (req,res) => {
+app.post('/', async (req,res) => {
   const {userName, userPhone, comment, order, queryId} = req.body
     try {
       await bot.answerWebAppQuery(queryId, {
