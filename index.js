@@ -59,7 +59,7 @@ app.post('/', async (req,res) => {
 
           const itemName = item.name
           const itemQuantity = item.quantity
-          const itemOptions = item.options
+          const itemOptions = item.options[0]
 
           if (itemOptions) {
             const itemSecondName = itemOptions.name
