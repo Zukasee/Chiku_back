@@ -51,7 +51,7 @@ bot.on('message', async (msg) => {
 
 app.post('/', async (req,res) => {
   const {userName, userPhone, comment, order, queryId} = req.body
-  let userMessage = userName + ' ваш заказ:\n'
+  let userMessage = userName + ' ваш заказ:\n\n'
     try {
       for (const index in order) {
         if (order.hasOwnProperty(index)) {
@@ -65,7 +65,7 @@ app.post('/', async (req,res) => {
             const itemSecondName = itemOptions.name
             const itemCoast = itemOptions.coast
 
-            userMessage += `${itemName} ${itemSecondName} ${itemQuantity} шт, по цене ${itemCoast} р\n`
+            userMessage += ` ${itemName} ${itemSecondName} ${itemQuantity} шт, по цене ${itemCoast} р\n`
           }  else {
             userMessage += `${itemName} - ошибка в опциях\n`;
           }
@@ -73,7 +73,7 @@ app.post('/', async (req,res) => {
         }
       }
 
-      userMessage += `принят и будет готов через 15 минут\nСпасибо что выбираете шаурму у Чику!!!`
+      userMessage += `\nпринят и будет готов через 15 минут\nСпасибо что выбираете шаурму у Чику!!!`
 
 
 
