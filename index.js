@@ -21,13 +21,13 @@ bot.on('message', async (msg) => {
   const text = msg.text
 
   if (text === '/start') {
-    await bot.sendMessage(chatId, 'df', {
-        reply_markup: {
-            keyboard: [
-                [{text: chatId, web_app: {url: webAppUrl }}]
-            ]
-        }
-    })
+    // await bot.sendMessage(chatId, 'df', {
+    //     reply_markup: {
+    //         keyboard: [
+    //             [{text: chatId, web_app: {url: webAppUrl }}]
+    //         ]
+    //     }
+    // })
 
     await bot.sendMessage(chatId, 'Добро пожаловать в кафе от Чику через Telegram бот!', {
       reply_markup: {
@@ -51,13 +51,34 @@ bot.on('message', async (msg) => {
 
 app.post('/', async (req,res) => {
   const {userName, userPhone, comment, order, queryId} = req.body
+  let userMessage = userName + ' ваш заказ:\n'
     try {
+      for (const index in order) {
+        if (order.hasOwnProperty(index)) {
+          const item = order[index]
+
+          const itemName = item.name
+          const itemQuantity = item.quantity
+          const itemSecondName = item.options.name
+          const itemCoast = item.options.coast
+          const itemWeight = item.options.weight
+
+          userMessage += `${itemName} ${itemSecondName} ${itemQuantity} шт, по цене ${itemCoast} р\n`
+        }
+      }
+
+      userMessage = `принят и будет готов через 15 минут\nСпасибо что выбираете шаурму у Чику!!!`
+
+
+
       await bot.answerWebAppQuery(queryId, {
         type: 'article',
         id: queryId,
         title: 'упешный заказ',
-        input_message_content: {message_text: 'Поздавляю с покупкой' + userName}
+        input_message_content: {message_text: userMessage}
       })
+      await bot.sendMessage(userArtem, 'НОВЫЙ ЗАКАЗ!')
+      await bot.sendMessage(userArtem, userMessage)
       return res.status(200).json({})
     } catch {
       await bot.answerWebAppQuery(queryId, {
