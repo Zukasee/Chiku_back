@@ -59,11 +59,18 @@ app.post('/', async (req,res) => {
 
           const itemName = item.name
           const itemQuantity = item.quantity
-          const itemSecondName = item.options.name
-          const itemCoast = item.options.coast
-          const itemWeight = item.options.weight
+          const itemOptions = item.options
 
-          userMessage += `${itemName} ${itemSecondName} ${itemQuantity} шт, по цене ${itemCoast} р\n`
+          if (itemOptions) {
+            const itemSecondName = itemOptions.name
+            const itemCoast = itemOptions.coast
+            const itemWeight = itemOptions.weight
+
+            userMessage += `${itemName} ${itemSecondName} ${itemQuantity} шт, по цене ${itemCoast} р\n`
+          }  else {
+            userMessage += `${itemName} - ошибка в опциях\n`;
+          }
+
         }
       }
 
